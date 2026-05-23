@@ -14,7 +14,24 @@ zero external dependencies.
 **Both knowledge bases are bundled directly.** No external CLI invocation,
 no other plugins required, no network access at runtime.
 
-## Install
+## CLI usage (any terminal, not just Claude Code)
+
+```bash
+# Search guides by keywords
+npx -y modern-design-fusion@latest search "modal dialog with blur"
+
+# Retrieve a specific guide (or multiple, comma-separated)
+npx -y modern-design-fusion@latest retrieve "light-dismiss-a-dialog"
+npx -y modern-design-fusion@latest retrieve "light-dismiss-a-dialog,translator"
+
+# List all 137 guides
+npx -y modern-design-fusion@latest list
+```
+
+On Windows use `npx.cmd` instead of `npx`. Works fully offline after the first
+install. Zero runtime dependencies.
+
+## Install (Claude Code plugin)
 
 ```
 /plugin marketplace add ajithshub318/modern-design-fusion

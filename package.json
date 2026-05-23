@@ -1,0 +1,43 @@
+{
+  "name": "modern-design-fusion",
+  "version": "0.2.0",
+  "description": "Self-contained Claude Code plugin + CLI: 137 modern web platform guides (Google) + frontend aesthetic philosophy (Anthropic), bundled together with a local-search CLI.",
+  "type": "module",
+  "bin": {
+    "modern-design-fusion": "./cli/index.mjs"
+  },
+  "main": "./cli/index.mjs",
+  "files": [
+    "cli/",
+    "skills/",
+    ".claude-plugin/",
+    "README.md",
+    "LICENSE",
+    "NOTICE"
+  ],
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ajithshub318/modern-design-fusion.git"
+  },
+  "keywords": [
+    "claude-code",
+    "claude-code-plugin",
+    "claude-code-skill",
+    "frontend",
+    "design",
+    "web-platform",
+    "modern-web",
+    "css",
+    "html",
+    "accessibility"
+  ],
+  "author": "ajithshub318",
+  "license": "Apache-2.0",
+  "homepage": "https://github.com/ajithshub318/modern-design-fusion#readme",
+  "bugs": {
+    "url": "https://github.com/ajithshub318/modern-design-fusion/issues"
+  }
+}
