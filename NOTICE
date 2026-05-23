@@ -7,17 +7,44 @@ You may obtain a copy of the License at
 
     http://www.apache.org/licenses/LICENSE-2.0
 
-------------------------------------------------------------------------------
+================================================================================
 
-This product is an orchestrator that depends on two upstream Apache-2.0 skills.
-It does NOT redistribute their source content; it routes between them at runtime.
+This product bundles and redistributes content from the following Apache-2.0
+licensed projects. All bundled content remains under its original copyright.
 
+--------------------------------------------------------------------------------
 1. modern-web-guidance
+--------------------------------------------------------------------------------
    Copyright Google LLC
-   https://github.com/GoogleChrome/modern-web-guidance
-   Licensed under the Apache License, Version 2.0.
+   Source: https://github.com/GoogleChrome/modern-web-guidance
+   License: Apache License, Version 2.0
 
-2. frontend-design (ships built-in with Claude Code)
+   Bundled in this product:
+   - skills/modern-design-fusion/guides/  (137 markdown guides)
+   - skills/modern-design-fusion/INDEX.md  (derived from guide metadata)
+
+   Modifications:
+   - INDEX.md is a hand-generated table of contents derived from the upstream
+     guide list and reformatted for keyword-based lookup.
+   - No edits made to individual guide markdown files.
+
+--------------------------------------------------------------------------------
+2. frontend-design (Anthropic Claude Code skill)
+--------------------------------------------------------------------------------
    Copyright Anthropic, PBC
-   https://github.com/anthropics/claude-code
-   Licensed under the Apache License, Version 2.0.
+   Source: https://github.com/anthropics/claude-code
+   License: Apache License, Version 2.0
+
+   Bundled in this product:
+   - skills/modern-design-fusion/design-philosophy.md
+
+   Modifications:
+   - Original SKILL.md frontmatter removed (would conflict with this plugin's
+     own skill registration).
+   - Content reorganized into named sections; meaning unchanged.
+   - Attribution header added pointing back to upstream.
+
+================================================================================
+
+The orchestration logic in skills/modern-design-fusion/SKILL.md is original
+work by this project and is also Apache-2.0 licensed.

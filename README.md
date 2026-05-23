@@ -1,19 +1,18 @@
 # Modern Design Fusion
 
-A Claude Code skill that **orchestrates** two best-in-class upstream skills so
-your agent gets technically modern code AND visually distinctive design in
-one pass — instead of having to remember to invoke both.
+A **self-contained** Claude Code skill that gives your agent both modern
+web platform APIs AND distinctive aesthetic direction — in one install, with
+zero external dependencies.
 
-## What it fuses
+## What it fuses (bundled inside this plugin)
 
-| Upstream | Fixes |
+| Bundled from | What it adds |
 |---|---|
-| [`modern-web-guidance`](https://github.com/GoogleChrome/modern-web-guidance) (Google Chrome) | AI defaulting to outdated web APIs (60-line custom modal vs `<dialog>`) |
-| `frontend-design` (Anthropic, built into Claude Code) | AI defaulting to generic aesthetics (Inter font, purple gradients, evenly-spaced cards) |
+| [`modern-web-guidance`](https://github.com/GoogleChrome/modern-web-guidance) (Google Chrome) | 137 guides on modern web APIs — `<dialog>`, View Transitions, container queries, INP optimization, autofill, passkeys, on-device AI APIs, etc. |
+| `frontend-design` skill (Anthropic) | Aesthetic philosophy that refuses generic AI defaults — no Inter, no purple gradients, no 3-col card grids |
 
-This plugin adds a **routing table** that decides which upstream(s) to invoke
-based on the user's intent, plus **opinionated defaults** for typography,
-color, motion, and browser support.
+**Both knowledge bases are bundled directly.** No external CLI invocation,
+no other plugins required, no network access at runtime.
 
 ## Install
 
@@ -23,27 +22,58 @@ color, motion, and browser support.
 /reload-plugins
 ```
 
-**Prerequisites** (install these first if you haven't):
-
-```
-/plugin marketplace add GoogleChrome/modern-web-guidance
-/plugin install modern-web-guidance@googlechrome
-
-# frontend-design ships built-in with Claude Code; no install needed
-```
+That's it. No prerequisites. No companion plugins.
 
 ## How it works
 
-When you ask Claude to do anything frontend-related, the skill triggers and:
+When you ask Claude to do anything frontend-related, the skill triggers and
+reads bundled sibling files locally:
 
-1. **Routes** your request: build/create/design tasks → invoke BOTH; pure API
-   questions → only `modern-web-guidance`; pure aesthetic critiques → only
-   `frontend-design`.
-2. **Retrieves** the relevant modern-web-guidance guide(s) via its `npx` CLI.
-3. **Commits** to one bold aesthetic axis (refuses to blend three).
-4. **Reconciles** any conflict between performance and aesthetic
-   (e.g. heavy animation breaking INP → use `scheduler.yield()`).
-5. **Self-checks** before reporting done.
+1. **Routes** your request via the table in `SKILL.md` (build/create → load
+   everything; pure API question → guides only; pure aesthetic critique →
+   philosophy only).
+2. **Greps `INDEX.md`** for guide IDs matching the task keywords.
+3. **Reads** the specific guide markdown files at `guides/<category>/<id>.md`.
+4. **Reads** `design-philosophy.md` for aesthetic direction (when relevant).
+5. **Reconciles** any tension between performance and aesthetic.
+6. **Self-checks** against a verification checklist before reporting done.
+
+No `npx`, no API calls, no embedding model required at runtime.
+
+## Why bundled instead of dependent?
+
+| Dimension | Orchestrator-only (depends on Google's plugin) | Self-contained (this design) |
+|---|---|---|
+| Install complexity | Requires 2 other plugins | One install |
+| Token cost per task | ~12,000 (npx CLI overhead) | ~8,000 (local Read) |
+| Startup delay | ~3s per `npx` call | None |
+| Network required | Yes (for first `npx`) | No, fully offline |
+| Updates from upstream | Automatic | Manual (run `scripts/sync-upstream.sh`) |
+
+## What's inside
+
+```
+modern-design-fusion/
+├── .claude-plugin/
+│   ├── plugin.json
+│   └── marketplace.json
+├── skills/modern-design-fusion/
+│   ├── SKILL.md                 ← orchestrator (routing + house rules)
+│   ├── INDEX.md                 ← 137-guide table of contents
+│   ├── design-philosophy.md     ← bundled aesthetic doc
+│   └── guides/                  ← 137 web-platform API guides
+│       ├── user-experience/
+│       ├── performance/
+│       ├── forms/
+│       ├── accessibility/
+│       ├── built-in-ai/
+│       └── ...
+├── scripts/
+│   └── generate-index.py        ← regenerates INDEX.md from upstream
+├── README.md
+├── LICENSE                      ← Apache 2.0
+└── NOTICE                       ← attribution to Google + Anthropic
+```
 
 ## House style defaults
 
@@ -60,7 +90,5 @@ Override any of these in your project's `CLAUDE.md`.
 
 ## License
 
-Apache 2.0. See [LICENSE](./LICENSE) and [NOTICE](./NOTICE).
-
-This plugin does not redistribute the upstream skills' content — it depends on
-them being installed and routes between them.
+Apache 2.0. See [`LICENSE`](./LICENSE) and [`NOTICE`](./NOTICE) for full
+attribution to Google (modern-web-guidance) and Anthropic (frontend-design).
