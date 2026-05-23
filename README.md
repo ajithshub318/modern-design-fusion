@@ -14,23 +14,6 @@ zero external dependencies.
 **Both knowledge bases are bundled directly.** No external CLI invocation,
 no other plugins required, no network access at runtime.
 
-## CLI usage (any terminal, not just Claude Code)
-
-```bash
-# Search guides by keywords
-npx -y modern-design-fusion@latest search "modal dialog with blur"
-
-# Retrieve a specific guide (or multiple, comma-separated)
-npx -y modern-design-fusion@latest retrieve "light-dismiss-a-dialog"
-npx -y modern-design-fusion@latest retrieve "light-dismiss-a-dialog,translator"
-
-# List all 137 guides
-npx -y modern-design-fusion@latest list
-```
-
-On Windows use `npx.cmd` instead of `npx`. Works fully offline after the first
-install. Zero runtime dependencies.
-
 ## Install (Claude Code plugin)
 
 ```
@@ -65,7 +48,24 @@ No `npx`, no API calls, no embedding model required at runtime.
 | Token cost per task | ~12,000 (npx CLI overhead) | ~8,000 (local Read) |
 | Startup delay | ~3s per `npx` call | None |
 | Network required | Yes (for first `npx`) | No, fully offline |
-| Updates from upstream | Automatic | Manual (run `scripts/sync-upstream.sh`) |
+| Updates from upstream | Automatic | Manual (re-run sync script) |
+
+## Optional: terminal CLI (advanced)
+
+The repo also ships a zero-dep Node CLI for terminal use. Not published to
+npm — run it directly from a local clone:
+
+```bash
+git clone https://github.com/ajithshub318/modern-design-fusion.git
+cd modern-design-fusion
+
+node cli/index.mjs search "modal dialog with blur"
+node cli/index.mjs retrieve "light-dismiss-a-dialog"
+node cli/index.mjs list
+```
+
+Most people won't need this — the Claude Code plugin reads the same guides
+directly. The CLI exists for grep-from-terminal use cases outside Claude Code.
 
 ## What's inside
 
@@ -85,8 +85,13 @@ modern-design-fusion/
 │       ├── accessibility/
 │       ├── built-in-ai/
 │       └── ...
+├── cli/                         ← optional terminal CLI (not on npm)
+│   ├── index.mjs                ← search / retrieve / list
+│   └── guides-meta.json         ← precomputed search index
 ├── scripts/
-│   └── generate-index.py        ← regenerates INDEX.md from upstream
+│   ├── generate-index.py        ← regenerates INDEX.md from upstream
+│   └── build-meta.py            ← regenerates cli/guides-meta.json
+├── package.json
 ├── README.md
 ├── LICENSE                      ← Apache 2.0
 └── NOTICE                       ← attribution to Google + Anthropic
